@@ -1,0 +1,24 @@
+{
+  "deps": [
+	  {
+        "type": "local",
+        "local-path": "../pony.fileExt"
+      },
+	  {
+        "type": "local",
+        "local-path": "../pony.flow"
+      },
+	  {
+        "type": "local",
+        "local-path": "../pony.jpg"
+      },
+	  {
+        "type": "local",
+        "local-path": "../pony.png"
+      },
+	  {
+        "type": "local",
+        "local-path": "../pony.stringExt"
+      }
+  ]
+}
