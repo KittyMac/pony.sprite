@@ -20,9 +20,7 @@ class iso _TestTileMap is UnitTest
 	fun apply(h: TestHelper) =>
 		// Load a sprite and render a couple of faces into the buffer
 		let buffer = Bitmap(512,512)
-		
-		//let s = Sprite("grassland.png", "grassland.json")
-		
+				
 		let t = TileMap("grassland.png", 64, 64)
 		
 		t.blitInto(buffer, 0, 0, 0)

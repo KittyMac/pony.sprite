@@ -7,7 +7,7 @@ use "json"
 
 class TileMap
 
-	var bitmap:Bitmap ref
+	var bitmap:Bitmap val
 	let tileWidth:USize
 	let tileHeight:USize
 	
@@ -16,14 +16,14 @@ class TileMap
 		tileWidth = tileWidth'
 		tileHeight = tileHeight'
 		
-		bitmap = Bitmap(1,1)
+		bitmap = recover val Bitmap(1,1) end
 		try
 			if StringExt.endswith(imgPath, ".png") then
-				bitmap = PNGReader.read(imgPath)?
+				bitmap = recover val PNGReader.read(imgPath)? end
 			end
 		end
 	
-	fun blitInto(destination:Bitmap ref, x:USize, y:USize, tileID:USize) =>
-		let tx = (tileID * tileWidth) % bitmap.width
-		let ty = (tileID * tileWidth) / bitmap.width
+	fun blitInto(destination:Bitmap ref, x:USize, y:USize, tileID:U8) =>
+		let tx = (tileID.usize() * tileWidth) % bitmap.width
+		let ty = (tileID.usize() * tileWidth) / bitmap.width
 		destination.blitPart(x, y, bitmap, tx, ty, tileWidth, tileHeight)
