@@ -11,6 +11,8 @@ class TileMap
 	let tileWidth:USize
 	let tileHeight:USize
 	
+	fun _tag():USize => 117
+	
 	new create(imgPath:String, tileWidth':USize, tileHeight':USize) =>
 		
 		tileWidth = tileWidth'
@@ -23,7 +25,7 @@ class TileMap
 			end
 		end
 	
-	fun blitInto(destination:Bitmap ref, x:USize, y:USize, tileID:U8) =>
-		let tx = (tileID.usize() * tileWidth) % bitmap.width
-		let ty = (tileID.usize() * tileWidth) / bitmap.width
+	fun blitInto(destination:Bitmap ref, x:USize, y:USize, tileID:USize) =>
+		let tx = (tileID * tileWidth) % bitmap.width
+		let ty = ((tileID * tileWidth) / bitmap.width) * tileHeight		
 		destination.blitPart(x, y, bitmap, tx, ty, tileWidth, tileHeight)
