@@ -3,6 +3,7 @@ use "stringExt"
 use "flow"
 use "png"
 use "json"
+use "bitmap"
 
 
 class TileMap

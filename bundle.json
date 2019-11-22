@@ -19,6 +19,10 @@
 	  {
         "type": "local",
         "local-path": "../pony.stringExt"
+      },
+	  {
+        "type": "local",
+        "local-path": "../pony.bitmap"
       }
   ]
 }

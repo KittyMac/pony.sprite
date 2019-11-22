@@ -3,6 +3,7 @@ use "ponytest"
 use "files"
 use "flow"
 use "png"
+use "bitmap"
 
 
 actor Main is TestList
