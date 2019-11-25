@@ -26,7 +26,7 @@ class TileMap
 			end
 		end
 	
-	fun blitInto(destination:Bitmap ref, x:USize, y:USize, tileID:USize) =>
+	fun blitInto(destination:Bitmap ref, x:I64, y:I64, tileID:USize) =>
 		let tx = (tileID * tileWidth) % bitmap.width
 		let ty = ((tileID * tileWidth) / bitmap.width) * tileHeight		
-		destination.blitPart(x, y, bitmap, tx, ty, tileWidth, tileHeight)
+		destination.blitPart(x, y, bitmap, tx.i64(), ty.i64(), tileWidth, tileHeight)
