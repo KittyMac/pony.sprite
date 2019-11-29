@@ -7,18 +7,24 @@ use "bitmap"
 use "collections"
 
 class Face
+	let anchorX:I64
+	let anchorY:I64
+	
 	let x:I64
 	let y:I64
 	let w:USize
 	let h:USize
 	let bitmapIdx:USize
 	
-	new create(bitmapIdx':USize, x':I64, y':I64, w':USize, h':USize) =>
+	new create(bitmapIdx':USize, anchorX':I64, anchorY':I64, x':I64, y':I64, w':USize, h':USize) =>
 		bitmapIdx = bitmapIdx'
+		anchorX = anchorX'
+		anchorY = anchorY'
 		x = x'
 		y = y'
 		w = w'
 		h = h'
+		
 
 class Sprite
 
@@ -41,14 +47,14 @@ class Sprite
 		try
 			let face = faces(faceIdx)?
 			let bitmap = bitmaps(face.bitmapIdx)?
-			destination.blitPart(x, y, bitmap, face.x, face.y, face.w, face.h)
+			destination.blitPart(x + face.anchorX, y + face.anchorY, bitmap, face.x, face.y, face.w, face.h)
 		end
 	
 	fun blitOver(destination:Bitmap ref, x:I64, y:I64, faceIdx:USize) =>
 		try
 			let face = faces(faceIdx)?
 			let bitmap = bitmaps(face.bitmapIdx)?
-			destination.blitPartOver(x, y, bitmap, face.x, face.y, face.w, face.h)
+			destination.blitPartOver(x + face.anchorX, y + face.anchorY, bitmap, face.x, face.y, face.w, face.h)
 		end
 
 		
@@ -82,15 +88,26 @@ class Sprite
 				let frame_y = frameRect.data("y")? as I64
 				let frame_w = frameRect.data("w")? as I64
 				let frame_h = frameRect.data("h")? as I64
+								
+				var anchor_x:I64 = 0
+				var anchor_y:I64 = 0
 				
-				faces.push(Face(bitmapIdx, frame_x, frame_y, frame_w.usize(), frame_h.usize()))
+				if trimmed then
+					let sourceSizeRect = frameObj.data("sourceSize")? as JsonObject
+					let spriteSourceSizeRect = frameObj.data("spriteSourceSize")? as JsonObject
+					
+					let source_size_w = sourceSizeRect.data("w")? as I64
+					let source_size_h = sourceSizeRect.data("h")? as I64
+					
+					let sprite_source_size_x = spriteSourceSizeRect.data("x")? as I64
+					let sprite_source_size_y = spriteSourceSizeRect.data("y")? as I64
+					
+					anchor_x = sprite_source_size_x - (source_size_w / 2)
+					anchor_y = sprite_source_size_y - (source_size_h / 2)
+				end
 				
-				/*
-if (sprite.trimmed) {
-            cx = sprite.spriteSourceSize.x - (sprite.sourceSize.w * 0.5);
-            cy = sprite.spriteSourceSize.y - (sprite.sourceSize.h * 0.5);
-}
-				*/
+				faces.push(Face(bitmapIdx, anchor_x, anchor_y, frame_x, frame_y, frame_w.usize(), frame_h.usize()))
+				
 			end
 				/*
 {

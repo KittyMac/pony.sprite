@@ -25,8 +25,7 @@ class iso _TestSprite is UnitTest
 	
 		let sprite = Sprite
 		sprite.addSheet("sheet/sheet.png", "sheet/sheet.json")
-		sprite.blitOver(buffer, 0, 0, 0)
-		sprite.blitOver(buffer, 109, 0, 1)
+		sprite.blitOver(buffer, 256, 256, 0)
 		
 		try
 			PNGWriter.write("/tmp/sprite_sample.png", buffer)?
