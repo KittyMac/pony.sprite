@@ -12,7 +12,25 @@ actor Main is TestList
 
 	fun tag tests(test: PonyTest) =>
 		test(_TestTileMap)
+		test(_TestSprite)
 
+
+class iso _TestSprite is UnitTest
+	fun name(): String => "read png"
+
+	fun apply(h: TestHelper) =>
+	
+		let buffer = Bitmap(512,512)
+		buffer.clear(RGBA.black())
+	
+		let sprite = Sprite
+		sprite.addSheet("sheet/sheet.png", "sheet/sheet.json")
+		sprite.blitOver(buffer, 0, 0, 0)
+		sprite.blitOver(buffer, 109, 0, 1)
+		
+		try
+			PNGWriter.write("/tmp/sprite_sample.png", buffer)?
+		end
 
 
 class iso _TestTileMap is UnitTest
@@ -31,7 +49,7 @@ class iso _TestTileMap is UnitTest
 		t.blitInto(buffer, 256, 0, 4)
 		
 		try
-			PNGWriter.write("/tmp/sample.png", buffer)?
+			PNGWriter.write("/tmp/tilemap_sample.png", buffer)?
 		end
 		
 		
