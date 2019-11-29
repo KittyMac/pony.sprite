@@ -35,9 +35,9 @@ class Sprite
 		bitmaps = Array[Bitmap](6)
 		faces = Array[Face](256)
 	
-	fun ref addSheet(imagePath:String, jsonPath:String)? =>
+	fun ref addSheet(imagePath:String, jsonPath:String, scale:F64 = 1.0)? =>
 		let bitmap:Bitmap val = _loadImageFromPath(imagePath)?
-		_loadJSON(bitmaps.size(), jsonPath)?
+		_loadJSON(bitmaps.size(), jsonPath, scale)?
 		
 		bitmaps.push(bitmap)
 	
@@ -64,7 +64,7 @@ class Sprite
 		end
 		error
 	
-	fun ref _loadJSON(bitmapIdx:USize, jsonPath:String)? =>		
+	fun ref _loadJSON(bitmapIdx:USize, jsonPath:String, scale:F64)? =>		
 		let jsonString = recover val FileExt.fileToString(jsonPath)? end
 		
 	    let doc: JsonDoc = JsonDoc
@@ -103,7 +103,13 @@ class Sprite
 				anchor_y = sprite_source_size_y - (source_size_h / 2)
 			end
 			
-			faces.push(Face(bitmapIdx, anchor_x, anchor_y, frame_x, frame_y, frame_w.usize(), frame_h.usize()))
+			faces.push(Face(bitmapIdx, 
+				(anchor_x.f64() * scale).i64(), 
+				(anchor_y.f64() * scale).i64(), 
+				(frame_x.f64() * scale).i64(), 
+				(frame_y.f64() * scale).i64(), 
+				(frame_w.f64() * scale).usize(), 
+				(frame_h.f64() * scale).usize()))
 			
 		end
 
