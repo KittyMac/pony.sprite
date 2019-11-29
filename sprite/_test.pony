@@ -24,10 +24,10 @@ class iso _TestSprite is UnitTest
 		buffer.clear(RGBA.black())
 	
 		let sprite = Sprite
-		sprite.addSheet("sheet/sheet.png", "sheet/sheet.json")
-		sprite.blitOver(buffer, 256, 256, 0)
-		
 		try
+			sprite.addSheet("sheet/sheet.png", "sheet/sheet.json")?
+			sprite.blitOver(buffer, 256, 256, 0)
+		
 			PNGWriter.write("/tmp/sprite_sample.png", buffer)?
 		end
 
