@@ -54,7 +54,20 @@ class Sprite
 			let bitmap = bitmaps(face.bitmapIdx)?
 			destination.blitPartOver(x + face.anchorX, y + face.anchorY, bitmap, face.x, face.y, face.w, face.h)
 		end
-
+	
+	fun size(faceIdx:USize):(USize,USize) =>
+		try
+			let face = faces(faceIdx)?
+			return (face.w, face.h)
+		end
+		(1,1)
+	
+	fun rect(x:I64, y:I64, faceIdx:USize):(I64,I64,I64,I64) =>
+		try
+			let face = faces(faceIdx)?
+			return (x + face.anchorX, y + face.anchorY, face.w.i64(), face.h.i64())
+		end
+		(1,1,1,1)
 		
 	fun _loadImageFromPath(imgPath:String):Bitmap val ? =>
 		try
