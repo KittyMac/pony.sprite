@@ -35,6 +35,14 @@ class Sprite
 		bitmaps = Array[Bitmap](6)
 		faces = Array[Face](256)
 	
+	new createWithSheet(imagePath:String, jsonPath:String, scale:F64 = 1.0)? =>
+		bitmaps = Array[Bitmap](6)
+		faces = Array[Face](256)
+		
+		let bitmap:Bitmap val = _loadImageFromPath(imagePath)?
+		_loadJSON(bitmaps.size(), jsonPath, scale)?
+		bitmaps.push(bitmap)
+	
 	fun ref addSheet(imagePath:String, jsonPath:String, scale:F64 = 1.0)? =>
 		let bitmap:Bitmap val = _loadImageFromPath(imagePath)?
 		_loadJSON(bitmaps.size(), jsonPath, scale)?
@@ -112,8 +120,8 @@ class Sprite
 				let sprite_source_size_x = spriteSourceSizeRect.data("x")? as I64
 				let sprite_source_size_y = spriteSourceSizeRect.data("y")? as I64
 				
-				anchor_x = sprite_source_size_x - (source_size_w / 2)
-				anchor_y = sprite_source_size_y - (source_size_h / 2)
+				anchor_x = sprite_source_size_x - ((source_size_w.f64() / 2.0).round()).i64()
+				anchor_y = sprite_source_size_y - ((source_size_h.f64() / 2.0).round()).i64()
 			end
 			
 			faces.push(Face(bitmapIdx, 
