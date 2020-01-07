@@ -92,8 +92,6 @@ class Sprite
 	    doc.parse(jsonString)?
 
 	    let root = doc.data as JsonObject
-		
-		let metaContainer = root.data("meta")? as JsonObject
 					
 		let frames = root.data("frames")? as JsonArray			
 		for i in Range[USize](0, frames.data.size()) do
