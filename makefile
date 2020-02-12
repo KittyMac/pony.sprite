@@ -1,3 +1,5 @@
+bitmap_lib_dir=../pony.bitmap/lib
+
 all: copy-libs
 	corral run -- ponyc -p ./lib -o ./build/ ./sprite
 	./build/sprite
@@ -7,7 +9,7 @@ test: copy-libs
 	./build/sprite
 
 copy-libs:
-	@cp ../pony.bitmap/lib/*.a ./lib/
+	@cp ${bitmap_lib_dir}/*.a ./lib/
 
 
 
@@ -37,6 +39,7 @@ corral-git:
 	@corral add github.com/KittyMac/pony.stringExt.git -q
 	@corral add github.com/KittyMac/pony.bitmap.git -q
 
+ci: bitmap_lib_dir = ./_corral/github_com_KittyMac_pony_bitmap/lib/
 ci: corral-git corral-fetch all
 	
 dev: corral-local corral-fetch all
